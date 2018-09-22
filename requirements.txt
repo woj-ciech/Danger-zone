@@ -1,0 +1,6 @@
+networkx==2.1
+matplotlib==2.0.0
+tld==0.7.9
+requests==2.18.4
+elasticsearch==5.5.3
+protobuf==3.6.1

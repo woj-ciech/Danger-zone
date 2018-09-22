@@ -15,7 +15,7 @@ Correlate data between domains, ips and email addresses, present it as a graph a
 	- haveIbeenPwned - Dumps (https://haveibeenpwned.com/)
 	- Username check - Check username, based on email address, across social media sites (https://username-availability.herokuapp.com/)
 	- Google - Query Google
--IP:
+- IP:
 	- Geolocation - Geolocate IP (https://extreme-ip-lookup.com/)
 	- Threatcrowd - Information about IP (https://github.com/AlienVault-OTX/ApiV2)
 	- VirusTotal - Information about IP (https://www.virustotal.com/) Key needed
@@ -137,7 +137,6 @@ It creates index with name of each module contains specific information
 
 ### JSON
 The following structure is created.\
-Output\[ip\domain\email]\\[module_name].json
 ![](https://i.imgur.com/YGHNfFW.png)
 
 ## Limitations

@@ -1,7 +1,7 @@
 # Danger zone
 ![Danger_zone](https://media1.giphy.com/media/hWoDtMnsUYdVu/giphy.gif)
 ## Info
-Correlate data between domains, ips and email addresses, present it as a graph and store everything into Elasticsearch and JSON files.
+Correlate data between domains, ips and email addresses, present it as a graph and store everything into Elasticsearch and JSON files.\
 Background story --> https://medium.com/@woj_ciech/osint-tool-for-visualizing-relationships-between-domains-ips-and-email-addresses-94377aa1f20a
 
 ## Cases

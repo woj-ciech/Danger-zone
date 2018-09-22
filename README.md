@@ -34,7 +34,7 @@ git clone
 pip install -r requirements.txt
 ```
 ```
-pip install google
+pip install Google-search-api
 ```
 
 For Elasticsearch setup go here https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html

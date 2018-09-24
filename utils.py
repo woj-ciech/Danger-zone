@@ -1,3 +1,4 @@
+from __future__ import print_function
 import domains
 import emails
 import ip
@@ -73,7 +74,7 @@ class Utils:
                 for i in domain_virustotal[domain_name]:
                     new_ip.append(i)
         else:
-            print "Nothing found"
+            print("Nothing found")
 
         return new_ip
 

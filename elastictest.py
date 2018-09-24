@@ -1,3 +1,4 @@
+from __future__ import print_function
 # from elasticsearch import Elasticsearch
 
 #
@@ -1225,8 +1226,8 @@ json = {"undetected_urls": [["http://everydayhealthhub.com/wp-content/uploads/20
             {"url": "http://northertrust.com/", "positives": 1, "total": 67, "scan_date": "2018-09-05 04:50:13"},
             {"url": "http://newteensgalleries.com/", "positives": 1, "total": 67, "scan_date": "2018-09-05 04:49:55"}]}
 
-print json
+print(json)
 
 sorted_json_virustotal = sorted(json['resolutions'], key=lambda k: k['last_resolved'], reverse=True)
 
-print sorted_json_virustotal
+print(sorted_json_virustotal)

@@ -1,3 +1,4 @@
+from __future__ import print_function
 import json
 import os
 from elasticsearch import Elasticsearch
@@ -7,6 +8,11 @@ import networkx as nx
 import sys
 from colors import bcolors
 
+try:
+    raw_input          # Python 2
+except NameError:
+    raw_input = input  # Python 3
+
 
 def parse_config():
     conf_file = 'settings.json'
@@ -14,7 +20,7 @@ def parse_config():
         with open(conf_file, 'r') as read_conf:
             conf = json.load(read_conf)
     except Exception as e:
-        print "Unable to parse config file: {0}".format(e)
+        print("Unable to parse config file: {0}".format(e))
         sys.exit()
 
     return conf
@@ -24,10 +30,10 @@ def test_connection():
     config = parse_config()
     try:
         es = Elasticsearch(host=config['elastic']['host'], port=config['elastic']['port'])
-        print "Succesfully connected to ElasticSearch"
+        print("Succesfully connected to ElasticSearch")
         return es
     except:
-        print 'Unable to connect to Elasticsearch. \nCheck your connection and settings.json file'
+        print('Unable to connect to Elasticsearch. \nCheck your connection and settings.json file')
         sys.exit()
 
 
@@ -36,7 +42,7 @@ def elast(index, doc_type, body):
     es = Elasticsearch(host=config['elastic']['host'], port=config['elastic']['port'])
     # es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
     ids = []
-    print "[*] Saving output to Elasticsearch"
+    print("[*] Saving output to Elasticsearch")
     try:
         resp = es.search(index=index)
         for i in resp['hits']['hits']:
@@ -62,7 +68,7 @@ def json_output(name, filename, data):
 
 
 def finding(finding):
-    print bcolors.OKGREEN + "---------------------------------------------------------" + bcolors.ENDC + finding + bcolors.OKGREEN + "---------------------------------------------------------" + bcolors.ENDC
+    print(bcolors.OKGREEN + "---------------------------------------------------------" + bcolors.ENDC + finding + bcolors.OKGREEN + "---------------------------------------------------------" + bcolors.ENDC)
 
 
 def save_graph(G, name):
@@ -75,7 +81,7 @@ def save_graph(G, name):
     # plt.figure(figsize=(10,10))
 
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    print "[*] Saving graph to graph/" + timestr + '-' + name + ".png"
+    print("[*] Saving graph to graph/" + timestr + '-' + name + ".png")
     plt.savefig(directory + timestr + '-' + name + ".png")
     plt.show()
     raw_input("Press Enter to quit...")

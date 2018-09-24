@@ -75,7 +75,7 @@ optional arguments:
 **Example domain check**
 ```
 python danger-zone.py --domain example.net --elastic
-Succesfully connected to ElasticSearch
+Successfully connected to ElasticSearch
 ----------------VirusTotal module---------------------------
 [*] Domain was resolved to following IPs: 
 xxx.xxx.xxx.xxx on 2017-02-20 00:00:00

@@ -1,3 +1,4 @@
+from __future__ import print_function
 import matplotlib.pyplot as plt
 
 import networkx as nx
@@ -44,7 +45,7 @@ def graf():
 
     #edge_colors = [e[2]['color'] for e in g.edges(data=True)]
 
-    print g.edges
+    print(g.edges)
 
     nx.draw(g, with_labels=True)
     plt.show()
@@ -53,7 +54,7 @@ def graf():
 def elast():
     es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
     res = es.index(index='b', doc_type='a', id=2, body=test)
-    print res
+    print(res)
 
 
 a = ["1"]

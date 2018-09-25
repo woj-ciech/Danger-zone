@@ -35,7 +35,7 @@ class Email:
     def whoxy(self, key, elastic_output):
         print bcolors.UNDERLINE + "------------Reverse whoxy module-----------------------" + bcolors.ENDC
         req_whoxy = requests.get(
-            "http://api.whoxy.com/?key=" + key + "&reverse=whois&email=" + self.email_address)
+            "https://api.whoxy.com/?key=" + key + "&reverse=whois&email=" + self.email_address)
         json_whoxy = json.loads(req_whoxy.content)
 
         output = {self.email_address: {}}

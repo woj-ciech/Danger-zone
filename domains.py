@@ -14,7 +14,7 @@ class Domains:
 
     def get_tld(self):
         try:
-            tld_from_domain = get_tld("http://" + self.domain, as_object=True)
+            tld_from_domain = get_tld("https://" + self.domain, as_object=True)
         except:
             print "Unknown domain"
             return False
@@ -61,7 +61,7 @@ class Domains:
 
     def whois(self, key, elastic_output):
         print "-------------------WhoIs module---------------------"
-        req_whois = requests.get("http://api.whoxy.com/?key=" + key + "&whois=" + self.domain)
+        req_whois = requests.get("https://api.whoxy.com/?key=" + key + "&whois=" + self.domain)
         json_whois = json.loads(req_whois.content)
         # #
 

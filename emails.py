@@ -105,9 +105,13 @@ class Email:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"}
         req_haveibeenpwned = requests.get("https://haveibeenpwned.com/api/v2/breachedaccount/" + self.email_address,
                                           headers=user_agent)
-        if req_haveibeenpwned != 200:
-            print "Connection error"
+        if req_haveibeenpwned.status_code != 200:
+            if req_haveibeenpwned.status_code == 404:
+                print "account not pwned"
+                return False
+            print "Connection error " + str(req_haveibeenpwned.status_code) + " " + req_haveibeenpwned.text
             return False
+
         json_haveibeenpwned = json.loads(req_haveibeenpwned.content)
         domains = []
         for i in json_haveibeenpwned:
@@ -115,9 +119,9 @@ class Email:
 
         if len(domains) > 0:
             for i in domains:
-                print i
-            else:
-                print "No results"
+                print bcolors.OKGREEN + i + bcolors.ENDC
+        else:
+            print "No results"
 
         return domains
 

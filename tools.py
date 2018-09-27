@@ -23,7 +23,7 @@ def parse_config():
 def test_connection():
     config = parse_config()
     try:
-        es = Elasticsearch(host=config['elastic']['host'], port=config['elastic']['port'])
+        es = Elasticsearch(host=config['elastic']['host'], port=config['elastic']['port'], http_auth=(config['elastic']['user'],config['elastic']['password']),use_ssl=config['elastic']['ssl'])
         print "Succesfully connected to ElasticSearch"
         return es
     except:

@@ -2,7 +2,7 @@
 ![Danger_zone](https://media1.giphy.com/media/hWoDtMnsUYdVu/giphy.gif)
 ## Info
 Correlate data between domains, ips and email addresses, present it as a graph and store everything into Elasticsearch and JSON files.\
-Background story --> https://medium.com/@woj_ciech/osint-tool-for-visualizing-relationships-between-domains-ips-and-email-addresses-94377aa1f20a
+Background story --> https://www.offensiveosint.io/osint-tool-for-visualizing-relationships-between-domains-ips-and-email-addresses/
 
 ## Cases
 * Based on given email, check for associate domains and then check these domains for other emails and IPs.

@@ -16,7 +16,7 @@ class Domains:
         try:
             tld_from_domain = get_tld("https://" + self.domain, as_object=True)
         except:
-            print "Unknown domain"
+            print("Unknown domain")
             return False
 
         req_tld = requests.get("https://raw.githubusercontent.com/mikewesthad/tld-data/master/data/tlds.json")
@@ -24,7 +24,7 @@ class Domains:
 
         for i in json_tld:
             if i['domain'] == "." + tld_from_domain.extension:
-                print "." + tld_from_domain.extension + " is sponsored by " + i['sponsor']
+                print("." + tld_from_domain.extension + " is sponsored by " + i['sponsor'])
 
     def threatcrowd(self, elastic_output):
         output = {}
@@ -33,17 +33,17 @@ class Domains:
         if json_threatcrowd['response_code'] == "0":
             return False
 
-        print "--------------------Threatcrowd module------------------------"
+        print("--------------------Threatcrowd module------------------------")
         votes = json_threatcrowd['votes']
         trust = "non-trusted" if votes < 0 else "trusted" if votes > 0 else "no opinion"
-        print "Reputation of " + self.domain + ": " + trust
+        print("Reputation of " + self.domain + ": " + trust)
 
-        print "[*] Domain was resolved to following IPs: "
+        print("[*] Domain was resolved to following IPs: ")
         for i, j in enumerate(json_threatcrowd['resolutions']):
             if i == 3:
                 break
             if len(j['ip_address']) > 1:
-                print bcolors.HEADER + j['ip_address'] + bcolors.ENDC
+                print(bcolors.HEADER + j['ip_address'] + bcolors.ENDC)
                 output[j["ip_address"]] = j["last_resolved"]
 
             else:
@@ -60,7 +60,7 @@ class Domains:
         # return json_threatcrowd
 
     def whois(self, key, elastic_output):
-        print "-------------------WhoIs module---------------------"
+        print("-------------------WhoIs module---------------------")
         req_whois = requests.get("https://api.whoxy.com/?key=" + key + "&whois=" + self.domain)
         json_whois = json.loads(req_whois.content)
         # #
@@ -68,34 +68,34 @@ class Domains:
         output = {self.domain: {}}
 
         if json_whois['status'] == 0:
-            print bcolors.FAIL + "Whois Retrieval Failed" + bcolors.ENDC
+            print(bcolors.FAIL + "Whois Retrieval Failed" + bcolors.ENDC)
 
         try:
             if json_whois['domain_registered'] != 'no':
 
-                print "[*] Domain " + bcolors.HEADER + json_whois[
+                print("[*] Domain " + bcolors.HEADER + json_whois[
                     'domain_name'] + bcolors.ENDC + " was registered on " + bcolors.OKGREEN + json_whois[
-                          'create_date'] + bcolors.ENDC + " in " + json_whois['domain_registrar']['registrar_name']
-                print "[*] Name servers"
+                          'create_date'] + bcolors.ENDC + " in " + json_whois['domain_registrar']['registrar_name'])
+                print("[*] Name servers")
 
                 output[self.domain]['create_date'] = json_whois['create_date']
 
                 for j in json_whois['name_servers']:
-                    print bcolors.OKBLUE + j + bcolors.ENDC
+                    print(bcolors.OKBLUE + j + bcolors.ENDC)
 
                 output[self.domain]['contact'] = json_whois['registrant_contact']
                 output[self.domain]['dns'] = json_whois['name_servers']
                 output[self.domain]['domain_name'] = json_whois['domain_name']
 
-                print "[*] Contact: "
+                print("[*] Contact: ")
 
                 for k in json_whois['registrant_contact']:
-                    print bcolors.OKBLUE + json_whois['registrant_contact'][k] + bcolors.ENDC
+                    print(bcolors.OKBLUE + json_whois['registrant_contact'][k] + bcolors.ENDC)
             else:
-                print bcolors.FAIL + "No match for domain" + self.domain + bcolors.ENDC
+                print(bcolors.FAIL + "No match for domain" + self.domain + bcolors.ENDC)
 
         except KeyError as e:
-            print bcolors.FAIL + "No information found about " + e.message + bcolors.ENDC
+            print(bcolors.FAIL + "No information found about " + e.message + bcolors.ENDC)
 
             # create_date, domain_registered, domain_registar, name_servers
 
@@ -108,7 +108,7 @@ class Domains:
         # return json_whois
 
     def whois_history(self, key, elastic_output):
-        print "-------------------WhoIs history module---------------------"
+        print("-------------------WhoIs history module---------------------")
         req_whois_history = requests.get(
             "http://api.whoxy.com/?key=" + key + "&history=" + self.domain)
         json_whois_history = json.loads(req_whois_history.content)
@@ -117,20 +117,19 @@ class Domains:
         help = 0
 
         if json_whois_history['status'] == 0:
-            print "Whois Retrieval Failed"
+            print("Whois Retrieval Failed")
             return False
 
-        print "[*} Found " + bcolors.OKGREEN + str(
-            json_whois_history['total_records_found']) + bcolors.ENDC + " result(s)"
+        print("[*} Found " + bcolors.OKGREEN + str(
+            json_whois_history['total_records_found']) + bcolors.ENDC + " result(s)")
 
         if json_whois_history['total_records_found'] > 0:
 
             for c, i in enumerate(json_whois_history['whois_records']):
                 try:
 
-                    print "[*] Domain " + bcolors.HEADER + self.domain + bcolors.ENDC + " was registered on " + i[
-                        'create_date'] + " in " + \
-                          i['domain_registrar']['registrar_name']
+                    print("[*] Domain " + bcolors.HEADER + self.domain + bcolors.ENDC + " was registered on " + i[
+                        'create_date'] + " in " +  i['domain_registrar']['registrar_name'])
                     # output = {counter: {'create_date': i['create_date'], 'contact': i['registrant_contact'],
                     #                     'dns': i['name_servers']}}
                     output[c] = {}
@@ -139,23 +138,23 @@ class Domains:
                     output[c]['dns'] = i['name_servers']
                     output[c]['domain_name'] = i['domain_name']
 
-                    print "[*] Contact: "
+                    print("[*] Contact: ")
                     for k in i['registrant_contact']:
-                        print bcolors.OKBLUE + i['registrant_contact'][k] + bcolors.ENDC
+                        print(bcolors.OKBLUE + i['registrant_contact'][k] + bcolors.ENDC)
 
-                    print "[*] Name servers:"
+                    print("[*] Name servers:")
                     for j in i["name_servers"]:
-                        print bcolors.OKBLUE + j + bcolors.ENDC
+                        print(bcolors.OKBLUE + j + bcolors.ENDC)
 
                     help = help + 1
 
                 except KeyError as e:
-                    print bcolors.FAIL + "No information found about " + e.message + bcolors.ENDC
+                    print(bcolors.FAIL + "No information found about " + e.message + bcolors.ENDC)
                     help = help - 1
 
-                print "---"
+                print("---")
         else:
-            "No records found"
+            print("No records found")
             return False
 
         # output = { sdate: :{create_date : xxx, contact : {xxx : xxx}, dns : [xxx]}
@@ -169,7 +168,7 @@ class Domains:
         # return json_whois_history
 
     def virustotal_opinion(self, key):
-        print "-------------------VirusTotal module---------------------"
+        print("-------------------VirusTotal module---------------------")
         req_virustotal = requests.get(
             "https://www.virustotal.com/vtapi/v2/url/report?apikey=" + key + "&allinfo=true&resource=" + self.domain)
 
@@ -181,11 +180,11 @@ class Domains:
         json_virustotal = json.loads(req_virustotal.content)
 
         if json_virustotal['response_code'] == 0:
-            print "[*] No results from VirusTotal"
+            print("[*] No results from VirusTotal")
             return False
 
-        print "[*] Domain " + self.domain + " was last scanned on " + json_virustotal['scan_date']
-        print "[*] Has " + str(json_virustotal['positives']) + " positive results"
+        print("[*] Domain " + self.domain + " was last scanned on " + json_virustotal['scan_date'])
+        print("[*] Has " + str(json_virustotal['positives']) + " positive results")
 
         # dorobic skaner
 
@@ -196,50 +195,49 @@ class Domains:
         # return json_virustotal
 
     def wayback(self):
-        print "----------------------Wayback Machine module------------------------"
+        print("----------------------Wayback Machine module------------------------")
         req_wayback = requests.get("http://archive.org/wayback/available?url=" + self.domain)
         json_wayback = json.loads(req_wayback.content)
 
         if json_wayback['archived_snapshots']:
-            print json_wayback['archived_snapshots']['closest']['url']
+            print(json_wayback['archived_snapshots']['closest']['url'])
         else:
-            print "No results for " + self.domain
+            print("No results for " + self.domain)
 
         return json_wayback
 
-        # print res
 
     def virustotal(self, key, elastic_output):
         output = {self.domain: []}
         help = 0
-        print "----------------VirusTotal module---------------------------"
+        print("----------------VirusTotal module---------------------------")
 
         req_virustotal = requests.get(
             "https://www.virustotal.com/vtapi/v2/domain/report?apikey=" + key + "&domain=" + self.domain)
 
         if req_virustotal.status_code == 204:
-            print "API limitation, putting into sleep for 70 sec"
+            print("API limitation, putting into sleep for 70 sec")
             time.sleep(70)
             req_virustotal = requests.get(
                 "https://www.virustotal.com/vtapi/v2/domain/report?apikey=" + key + "&domain=" + self.domain)
 
         if req_virustotal.status_code == 403:
-            print "Wrong API key, no more info can be gathered"
+            print("Wrong API key, no more info can be gathered")
             sys.exit()
 
         json_virustotal = json.loads(req_virustotal.content)
 
         if json_virustotal['response_code'] != 0:
-            print "[*] Domain was resolved to following IPs: "
+            print("[*] Domain was resolved to following IPs: ")
             for i in json_virustotal['resolutions']:
-                print bcolors.HEADER + i['ip_address'] + bcolors.ENDC + " on " + bcolors.OKBLUE + i[
-                    'last_resolved'] + bcolors.ENDC
+                print(bcolors.HEADER + i['ip_address'] + bcolors.ENDC + " on " + bcolors.OKBLUE + i[
+                    'last_resolved'] + bcolors.ENDC)
                 output[self.domain].append(i['ip_address'])
                 help = help + 1
                 if help > 2:
                     break
         else:
-            print bcolors.FAIL + "Nothing found" + bcolors.ENDC
+            print(bcolors.FAIL + "Nothing found" + bcolors.ENDC)
 
         # output = { self.domain : [xxx.xxx,zzz.zzz,yyy.yyy]
         if elastic_output:

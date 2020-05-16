@@ -41,9 +41,9 @@ if email:
     domains_from_email = util.get_domain_from_email(email, elastic_output)
 
     if len(domains_from_email) > 0:
-        print "Found domain: "
+        print("Found domain: ")
         for i_domain in domains_from_email:
-            print bcolors.OKGREEN + i_domain + bcolors.ENDC
+            print(bcolors.OKGREEN + i_domain + bcolors.ENDC)
             G.add_edge(email, i_domain)
 
         answer1 = raw_input("Do you want to check domains? [y/n] ")
@@ -61,17 +61,17 @@ if email:
                     ip_help.append(i_ip)
                     G.add_edge(j_domain, i_ip, color='yellow')
         else:
-            print "[*] Bye "
+            print("[*] Bye ")
             tools.save_graph(G, email)
             sys.exit()
     else:
-        print "No domain found"
+        print("No domain found")
         sys.exit()
 
     if len(ip_help) > 0:
-        print "Found following IPs "
+        print("Found following IPs ")
         for j_ip in ip_help:
-            print bcolors.OKGREEN + j_ip + bcolors.ENDC
+            print(bcolors.OKGREEN + j_ip + bcolors.ENDC)
 
         answer2 = raw_input("Do you want to check IP(s)? [y/n] ")
         if answer2 == "y":
@@ -80,16 +80,16 @@ if email:
                 domain_from_ip = util.get_domain_from_ip(k_ip, elastic_output)
                 for k_domain in domain_from_ip:
                     G.add_edge(k_ip, k_domain)
-                    print k_domain
+                    print(k_domain)
 
         else:
-            print "[*] Bye"
+            print("[*] Bye")
             tools.save_graph(G, email)
             sys.exit()
 
     else:
         tools.save_graph(G, email)
-        print "No IP was found"
+        print("No IP was found")
         sys.exit()
 
     tools.save_graph(G, email)
@@ -102,10 +102,10 @@ elif address:
 
     domain_from_ip = util.get_domain_from_ip(address, elastic_output)
 
-    print "Found domain:"
+    print("Found domain:")
     for i_domain in domain_from_ip:
         G.add_edge(address, i_domain)
-        print bcolors.OKGREEN + i_domain + bcolors.ENDC
+        print(bcolors.OKGREEN + i_domain + bcolors.ENDC)
 
     if len(domain_from_ip) > 0:
         answer3 = raw_input("Do you want to check domain(s)? [y/n] ")
@@ -130,13 +130,13 @@ elif address:
                 tools.save_graph(G, address)
 
     else:
-        print "No domain found"
+        print("No domain found")
         sys.exit()
 
     if len(emails_help) > 0:
-        print "Found emails:"
+        print("Found emails:")
         for j_email in emails_help:
-            print j_email
+            print(j_email)
 
         answer4 = raw_input("Do you want to check email(s) [y/n] ")
         if answer4 == 'y':
@@ -151,12 +151,12 @@ elif address:
             tools.save_graph(G, address)
             sys.exit()
     else:
-        print "No email found"
+        print("No email found")
         tools.save_graph(G, address)
         sys.exit()
 
     if len(domains_help) > 0:
-        print "Found domains:"
+        print("Found domains:")
 
         for l_domain in domains_help:
             tools.finding(l_domain)
@@ -167,7 +167,7 @@ elif address:
                 G.add_edge(l_domain, l_email)
     else:
         tools.save_graph(G, address)
-        print "No domain found"
+        print("No domain found")
         sys.exit()
 
     tools.save_graph(G, address)
@@ -182,17 +182,17 @@ elif domain:
     ip_tmp = util.get_ip_from_domain(domain, elastic_output)
     email_tmp = util.get_email_from_domain(domain, elastic_output)
 
-    print "[*] Found email"
+    print("[*] Found email")
     for i_email in email_tmp:
         G.add_edge(domain, i_email)
-        print i_email
+        print(i_email)
 
-    print "[*] Found IP: "
+    print("[*] Found IP: ")
     for i_ip in ip_tmp:
-        print bcolors.HEADER + i_ip + bcolors.ENDC
+        print(bcolors.HEADER + i_ip + bcolors.ENDC)
         G.add_edge(domain, i_ip)
 
-    print "[*] Going deeper..."
+    print("[*] Going deeper...")
     for j_email in email_tmp:
         tools.finding(j_email)
         domains_from_email1 = util.get_domain_from_email(j_email, elastic_output)
